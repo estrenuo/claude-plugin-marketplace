@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "qmd": {
+    "qmd-feat": {
       "command": "qmd",
       "args": ["mcp"]
     }
