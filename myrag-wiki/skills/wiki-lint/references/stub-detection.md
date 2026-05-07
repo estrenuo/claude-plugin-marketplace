@@ -94,7 +94,7 @@ Sluit de lijst af en ga naar de procedure in `## Goedkeuringsmodus` hieronder.
 
 Na de presentatielijst delegeert de skill naar:
 
-`.claude/skills/wiki-lint/references/approval-modes.md`
+`approval-modes.md`
 
 Dat bestand bevat de keuzegate (individueel A vs. bulk B), de per-stub ja/nee-loop (LINT-02),
 de bulk-loop (LINT-03), de vulprocedure, en de randgevallen. Voer hier geen eigen

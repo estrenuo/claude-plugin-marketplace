@@ -60,13 +60,13 @@ een gestructureerde samenvatting is bruikbaarder dan een lijst van bestandsnamen
 
 **Stap 1: Tel inbound links per pagina**
 Voer de Bash-commando's uit uit
-`.claude/skills/wiki-explore/references/graph-logic.md` (sectie Inbound-link-teller).
+`references/graph-logic.md` (sectie Inbound-link-teller).
 Waarom: Obsidian heeft geen CLI voor link-graafanalyse; grep over `wiki/**/*.md` is
 de enige manier om inbound-link-tellingen te berekenen zonder externe tools.
 
 **Stap 2: Detecteer orphan-pagina's**
 Voer de Bash-commando's uit uit
-`.claude/skills/wiki-explore/references/graph-logic.md` (sectie Orphan-detector).
+`references/graph-logic.md` (sectie Orphan-detector).
 Waarom: orphan-pagina's zijn onzichtbaar in normale navigatie en verraden
 structuurproblemen of vergeten content.
 

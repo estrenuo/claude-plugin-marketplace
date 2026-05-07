@@ -56,7 +56,7 @@ Doel: pagina's die niet bereikbaar zijn vanuit andere wiki-pagina's identificere
 
 **False-positive-uitzonderingen (alle algoritmische checks)**
 
-Zie `.claude/skills/wiki-lint/references/false-positives.md` voor de volledige
+Zie `references/false-positives.md` voor de volledige
 lijst van false-positive-uitzonderingen die bij alle algoritmische checks
 toegepast moeten worden vóór rapportage.
 
@@ -106,7 +106,7 @@ Doel: belangrijke concepten zonder eigen pagina signaleren voordat ze tot verwar
 Zodat de gebruiker een gerichte lijst krijgt van stubs die de wiki al kan vullen,
 vóór het algemene rapport gepresenteerd wordt.
 
-Volg de procedure in `.claude/skills/wiki-lint/references/stub-detection.md`:
+Volg de procedure in `references/stub-detection.md`:
 
 - **Stap A**: Vind alle stub-bestanden via Grep op `tags: [stub]`
 - **Stap B**: Bepaal het onderwerp per stub (uit `title:` frontmatter)
@@ -129,7 +129,7 @@ vóór enige schrijfactie plaatsvindt.
 direct naar Stap 3.
 
 **Als er ≥1 vulbare stub is**: volg de volledige procedure in:
-`.claude/skills/wiki-lint/references/approval-modes.md`
+`references/approval-modes.md`
 
 Dat bestand bevat de keuzegate (A/B/niets), de per-stub ja/nee-loop (Modus A, LINT-02),
 de bulk-loop (Modus B, LINT-03), de vulprocedure, en de randgevallen.
