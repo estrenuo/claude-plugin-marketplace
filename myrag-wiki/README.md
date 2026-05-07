@@ -64,7 +64,8 @@ niet in `CLAUDE.md`.
 ## Vereisten
 
 - Obsidian-vault met `CLAUDE.md`, `index.md`, `log.md`, `raw/`, `wiki/` (zie Vault bootstrap hierboven)
-- qmd MCP-server geconfigureerd (zie `.mcp.json` — start automatisch wanneer plugin enabled is)
+- qmd CLI geïnstalleerd, met de **estrenuo/qmd fork** (https://github.com/estrenuo/qmd) — deze fork voegt MCP-tools `update` en `embed` toe die de skills nodig hebben. Upstream qmd werkt **niet** met deze plugin.
+- De MCP-server staat in `.mcp.json` geregistreerd als `qmd-feat` en start automatisch wanneer de plugin enabled is.
 - Python 3 voor `${CLAUDE_PLUGIN_ROOT}/scripts/regen-quick-indexes.py`
   (script wordt vanuit de vault root aangeroepen; vindt `wiki/` via cwd of via een vault-pad als argv[1])
 

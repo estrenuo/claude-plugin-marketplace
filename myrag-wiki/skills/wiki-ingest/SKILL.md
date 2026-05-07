@@ -8,7 +8,7 @@ description: |
   "scan de raw-map", "verwerk dit artikel", of informele varianten daarvan.
   Niet voor: wiki-inhoud opvragen (→ wiki-query), lint-controles (→ wiki-lint),
   wiki-overzicht (→ wiki-explore).
-allowed-tools: Read, Write, Edit, Bash, Task, mcp__qmd__update
+allowed-tools: Read, Write, Edit, Bash, Task, mcp__qmd-feat__update
 ---
 
 # wiki-ingest
@@ -123,7 +123,7 @@ Volledige stappen met why-zinnen en format-specs in `references/ingest-steps.md`
 8. Append aan log.md (type: ingest of update)
 9. Update wiki/ingest-state.md (mtime, hash, wikilink met `\|`-escape, datum)
 9.5. (Regenerate-modus, post-batch) Run `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/regen-quick-indexes.py"`
-10. Roep `qmd update` aan via MCP — altijd als laatste stap, post-batch
+10. Roep `mcp__qmd-feat__update` aan — altijd als laatste stap, post-batch
 
 **Multi-page geval:** Als Modified bestand meerdere wikilinks heeft in de Source page cel, voer dan de multi-page dialoog uit vóór stap 2. Details in `references/ingest-steps.md`.
 
