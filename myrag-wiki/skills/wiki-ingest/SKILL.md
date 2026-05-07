@@ -28,7 +28,7 @@ find raw/ -maxdepth 1 -type f \( -name "*.md" -o -name "*.pdf" \) | sort
 Sla `raw/assets/` altijd over — dit zijn afbeeldingen, geen bronnen (INGS-06).
 
 **Vergelijk met wiki/ingest-state.md.** Lees het bestand en classificeer elk gevonden bestand.
-Zie `.claude/skills/wiki-ingest/references/detection-logic.md` voor de exacte regels:
+Zie `references/detection-logic.md` voor de exacte regels:
 - De Morgan-regel (mtime ÉN hash — niet alleen mtime)
 - Alle 4 detectiemodi: New / Modified / Unchanged / Deleted
 - Bash-commando's voor mtime en hash
@@ -110,7 +110,7 @@ In **regenerate-modus** sla Stap 7 (patch quick-indexes in ingest-steps.md) per-
 
 Na afloop van de batch (in regenerate-modus): roep `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/regen-quick-indexes.py"` aan vóór Stap 10 (qmd update in ingest-steps.md).
 
-Volledige stappen met why-zinnen en format-specs in `.claude/skills/wiki-ingest/references/ingest-steps.md`.
+Volledige stappen met why-zinnen en format-specs in `references/ingest-steps.md`.
 
 **Samenvatting:**
 1. Lees het bronbestand volledig (skip raw/assets/)
@@ -132,7 +132,7 @@ Volledige stappen met why-zinnen en format-specs in `.claude/skills/wiki-ingest/
 ## Stap 5 — Afsluitend rapport
 
 Na verwerking van alle bestanden: genereer het rapport met 7 verplichte elementen.
-Zie `.claude/skills/wiki-ingest/references/report-format.md` voor het volledige template.
+Zie `references/report-format.md` voor het volledige template.
 
 Minimaal vereist (INGS-07):
 - **Tellingen:** N nieuw | N bijgewerkt | N ongewijzigd | N verwijderd | N mislukt

@@ -1,6 +1,6 @@
 # myrag-wiki plugin
 
-Skills + agents voor het onderhouden van een Obsidian-based LLM wiki (zie `CLAUDE.md` in de bovenliggende repo voor het volledige schema).
+Skills + agents voor het onderhouden van een Obsidian-based LLM wiki (zie `templates/CLAUDE.md` voor het vault-schema en de Vault bootstrap-sectie hieronder voor setup).
 
 ## Bevat
 
@@ -17,17 +17,10 @@ Skills + agents voor het onderhouden van een Obsidian-based LLM wiki (zie `CLAUD
 
 ## Installeren
 
-### Lokaal (vanuit deze repo)
+### Via GitHub
 
 ```
-/plugin marketplace add /Users/sanderrobijns/Documents/GitHub/claude-plugin-marketplace
-/plugin install myrag-wiki@myrag-marketplace
-```
-
-### Via GitHub (na pushen)
-
-```
-/plugin marketplace add <user>/claude-plugin-marketplace
+/plugin marketplace add estrenuo/claude-plugin-marketplace
 /plugin install myrag-wiki@myrag-marketplace
 ```
 
@@ -40,7 +33,7 @@ Voeg de marketplace toe aan team-`settings.json` zodat alle teamleden hem automa
   "extraKnownMarketplaces": {
     "myrag-marketplace": {
       "type": "github",
-      "repo": "<user>/<repo>"
+      "repo": "estrenuo/claude-plugin-marketplace"
     }
   },
   "enabledPlugins": {
@@ -77,11 +70,21 @@ niet in `CLAUDE.md`.
 
 ## Configuratie
 
-De `wiki-explore` skill (graph-modus) heeft het pad naar je Obsidian wiki nodig.
+De `wiki-explore` skill (graph-modus) heeft het pad naar de `wiki/`-directory binnen je vault nodig.
 Zet de environment variable `MYRAG_WIKI_DIR` in je shell profile (`~/.zshrc` of `~/.bashrc`):
 
 ```bash
-export MYRAG_WIKI_DIR="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/MyRAG/wiki"
+export MYRAG_WIKI_DIR="/pad/naar/jouw-vault/wiki"
+```
+
+Voorbeelden voor veelvoorkomende setups:
+
+```bash
+# Lokale vault
+export MYRAG_WIKI_DIR="$HOME/Documents/Obsidian/my-vault/wiki"
+
+# iCloud-gesyncte Obsidian vault (macOS)
+export MYRAG_WIKI_DIR="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/my-vault/wiki"
 ```
 
 Herlaad daarna je shell (`source ~/.zshrc`) of start een nieuwe terminal.
