@@ -1,0 +1,10 @@
+{
+  "name": "myrag-wiki",
+  "version": "0.1.0",
+  "description": "Wiki maintainer skills voor MyRAG: ingest, query, lint, explore en sessiestart voor een Obsidian-based LLM wiki.",
+  "author": {
+    "name": "Sander Robijns"
+  },
+  "keywords": ["obsidian", "wiki", "rag", "knowledge-management", "data-vault"],
+  "license": "MIT"
+}
