@@ -21,7 +21,7 @@ Skills + agents voor het onderhouden van een Obsidian-based LLM wiki (zie `templ
 
 ```
 /plugin marketplace add estrenuo/claude-plugin-marketplace
-/plugin install myrag-wiki@myrag-marketplace
+/plugin install myrag-wiki@claude-plugin-marketplace
 ```
 
 ### In Claude Cowork
@@ -31,13 +31,13 @@ Voeg de marketplace toe aan team-`settings.json` zodat alle teamleden hem automa
 ```json
 {
   "extraKnownMarketplaces": {
-    "myrag-marketplace": {
+    "claude-plugin-marketplace": {
       "type": "github",
       "repo": "estrenuo/claude-plugin-marketplace"
     }
   },
   "enabledPlugins": {
-    "myrag-wiki@myrag-marketplace": true
+    "myrag-wiki@claude-plugin-marketplace": true
   }
 }
 ```
