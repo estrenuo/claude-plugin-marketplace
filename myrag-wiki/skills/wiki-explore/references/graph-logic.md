@@ -1,11 +1,13 @@
 # Graph-logica voor wiki-explore
 
 Bash-commando's voor de graph-modus van wiki-explore.
-Voer deze uit vanuit de vault root. Pas het WIKI_DIR-pad aan als de vault
-op een andere locatie staat.
+Voer deze uit vanuit de vault root.
+
+`WIKI_DIR` wordt gelezen uit de environment variable `MYRAG_WIKI_DIR`.
+Zie de plugin-README voor setup-instructies.
 
 ```bash
-WIKI_DIR="/Users/sanderrobijns/Library/Mobile Documents/iCloud~md~obsidian/Documents/MyRAG/wiki"
+WIKI_DIR="${MYRAG_WIKI_DIR:?Zet MYRAG_WIKI_DIR in je shell profile naar het wiki/-pad van je Obsidian vault}"
 ```
 
 ---
@@ -39,7 +41,7 @@ Dit is acceptabel voor een structuuroverzicht — de topranking is betrouwbaar.
 Vindt wiki-pagina's die door geen enkele andere wiki-pagina gelinkt worden.
 
 ```bash
-WIKI_DIR="/Users/sanderrobijns/Library/Mobile Documents/iCloud~md~obsidian/Documents/MyRAG/wiki"
+WIKI_DIR="${MYRAG_WIKI_DIR:?Zet MYRAG_WIKI_DIR in je shell profile naar het wiki/-pad van je Obsidian vault}"
 
 # Verzamel alle slugs die ergens gelinkt worden
 LINKED=$(grep -rh '\[\[' "$WIKI_DIR" --include="*.md" \

@@ -49,9 +49,42 @@ Voeg de marketplace toe aan team-`settings.json` zodat alle teamleden hem automa
 }
 ```
 
+## Vault bootstrap
+
+De skills + agents lezen bij elke startup `CLAUDE.md` en `index.md` uit de vault root.
+Voor een nieuwe vault: kopieer het meegeleverde template en pas het aan voor je domein.
+
+```bash
+cd /pad/naar/jouw-vault
+cp "${CLAUDE_PLUGIN_ROOT}/templates/CLAUDE.md" ./CLAUDE.md
+touch index.md log.md
+mkdir -p raw wiki/{entities,concepts,sources,analysis}
+```
+
+Open daarna `CLAUDE.md` en vul de `Customization notes`-sectie in met je domein,
+tags en eventuele custom subdirectories (zoals `recipes/` of `projects/`).
+
+Het template bevat alleen de structurele afspraken — geen vault-specifieke
+content. Workflows (ingest, query, lint, explore) leven in de plugin-skills,
+niet in `CLAUDE.md`.
+
 ## Vereisten
 
-- Obsidian-vault met de structuur beschreven in `CLAUDE.md` (raw/, wiki/, scripts/, index.md, log.md)
-- qmd MCP-server geconfigureerd (zie `.mcp.json`)
+- Obsidian-vault met `CLAUDE.md`, `index.md`, `log.md`, `raw/`, `wiki/` (zie Vault bootstrap hierboven)
+- qmd MCP-server geconfigureerd (zie `.mcp.json` — start automatisch wanneer plugin enabled is)
 - Python 3 voor `${CLAUDE_PLUGIN_ROOT}/scripts/regen-quick-indexes.py`
   (script wordt vanuit de vault root aangeroepen; vindt `wiki/` via cwd of via een vault-pad als argv[1])
+
+## Configuratie
+
+De `wiki-explore` skill (graph-modus) heeft het pad naar je Obsidian wiki nodig.
+Zet de environment variable `MYRAG_WIKI_DIR` in je shell profile (`~/.zshrc` of `~/.bashrc`):
+
+```bash
+export MYRAG_WIKI_DIR="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/MyRAG/wiki"
+```
+
+Herlaad daarna je shell (`source ~/.zshrc`) of start een nieuwe terminal.
+
+Zonder deze variable falen de graph-commando's met een duidelijke foutmelding
+die naar deze sectie verwijst.

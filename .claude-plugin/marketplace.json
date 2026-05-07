@@ -1,7 +1,7 @@
 {
-  "name": "myrag-marketplace",
+  "name": "claude-plugin-marketplace",
   "owner": {
-    "name": "Sander Robijns"
+    "name": "Sander Robijns | Estrenuo"
   },
   "plugins": [
     {
