@@ -82,22 +82,37 @@ houdt versielijnen onafhankelijk zodra er meer dan één plugin bestaat.
 
 Voor een plugin-release:
 
-1. Bepaal het type bump (MAJOR / MINOR / PATCH) op basis van bovenstaande regels.
-2. Update `version` in `<plugin>/.claude-plugin/plugin.json`.
-3. Commit met een duidelijke boodschap, bijvoorbeeld:
-
-   ```text
-   myrag-wiki: bump to 0.2.0 (add wiki-export skill)
-   ```
-
-4. Tag de commit:
+1. Bepaal het type bump (MAJOR / MINOR / PATCH) op basis van
+   bovenstaande regels.
+2. Voer het bump-script uit op `main`, op een schone working tree:
 
    ```bash
-   git tag myrag-wiki/v0.2.0
-   git push origin main --tags
+   scripts/bump-plugin.sh <plugin-name> <patch|minor|major>
    ```
 
-5. Optioneel: schrijf een release-note op de bijbehorende GitHub release.
+   Voorbeeld:
+
+   ```bash
+   scripts/bump-plugin.sh myrag-wiki minor
+   ```
+
+   Het script muteert `version` in `<plugin>/.claude-plugin/plugin.json`,
+   maakt een commit en plaatst een annotated tag `<plugin>/v<x.y.z>`.
+
+3. Push wijzigingen en tag:
+
+   ```bash
+   git push origin main --follow-tags
+   ```
+
+4. Optioneel: schrijf een release-note op de bijbehorende GitHub release.
+
+Als je in dezelfde PR ook code-changes wilt bumpen (nog niet
+gecommit), gebruik `--allow-dirty`:
+
+```bash
+scripts/bump-plugin.sh myrag-wiki minor --allow-dirty
+```
 
 ## Pull requests
 
