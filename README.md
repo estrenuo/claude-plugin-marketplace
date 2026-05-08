@@ -34,3 +34,8 @@ Voeg de marketplace toe aan team-`settings.json` zodat alle teamleden hem automa
 ```
 
 Zie de README van elke plugin voor specifieke vereisten en configuratie.
+
+## Bijdragen
+
+Zie [CONTRIBUTING.md](CONTRIBUTING.md) voor de versioning- en tag-conventie
+(per-plugin semver, tag-format `<plugin>/v<x.y.z>`).
