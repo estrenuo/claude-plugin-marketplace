@@ -98,6 +98,21 @@ if git rev-parse --verify --quiet "refs/tags/${TAG}" >/dev/null; then
   error_exit "tag ${TAG} already exists"
 fi
 
-# (volgende tasks vullen rest in)
-echo "would bump ${PLUGIN}: ${CURRENT} → ${NEW}"
+# Mutate plugin.json (canonical re-format, behoudt accenten)
+python3 - "$PLUGIN_JSON" "$CURRENT" "$NEW" <<'PY'
+import json, sys
+path, expected, new_version = sys.argv[1], sys.argv[2], sys.argv[3]
+with open(path) as f:
+    data = json.load(f)
+got = data.get("version")
+if got != expected:
+    raise SystemExit(f"version mismatch: expected {expected}, got {got}")
+data["version"] = new_version
+with open(path, "w") as f:
+    json.dump(data, f, indent=2, ensure_ascii=False)
+    f.write("\n")
+PY
+
+# (volgende task voegt git ops toe)
+echo "mutated ${PLUGIN_JSON}: ${CURRENT} → ${NEW}"
 echo "would tag: ${TAG}"
