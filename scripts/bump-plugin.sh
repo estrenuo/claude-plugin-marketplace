@@ -113,6 +113,22 @@ with open(path, "w") as f:
     f.write("\n")
 PY
 
-# (volgende task voegt git ops toe)
-echo "mutated ${PLUGIN_JSON}: ${CURRENT} → ${NEW}"
-echo "would tag: ${TAG}"
+# Git operations
+git add "$PLUGIN_JSON"
+if ! git commit -m "${PLUGIN}: bump to ${NEW}"; then
+  error_exit "commit failed — plugin.json edit is staged but not committed; fix and re-run"
+fi
+COMMIT_SHA=$(git rev-parse --short HEAD)
+
+if ! git tag -a "$TAG" -m "${PLUGIN} v${NEW}"; then
+  error_exit "tag failed; commit ${COMMIT_SHA} exists, run 'git tag -a ${TAG} -m \"${PLUGIN} v${NEW}\"' manually"
+fi
+
+# Success output
+cat <<EOF
+✓ Bumped ${PLUGIN}: ${CURRENT} → ${NEW}
+✓ Committed: ${COMMIT_SHA}
+✓ Tagged: ${TAG}
+
+Push: git push origin main --follow-tags
+EOF
