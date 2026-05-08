@@ -36,6 +36,10 @@ case "$BUMP_TYPE" in
   *) error_exit "bump type must be patch, minor, or major (got: ${BUMP_TYPE})" ;;
 esac
 
+# Check 9: python3 beschikbaar (vóór eerste python-aanroep!)
+command -v python3 >/dev/null 2>&1 \
+  || error_exit "python3 is required for JSON edit but not found on PATH"
+
 # Check 3: plugin.json bestaat
 PLUGIN_JSON="${PLUGIN}/.claude-plugin/plugin.json"
 [[ -f "$PLUGIN_JSON" ]] || error_exit "plugin not found: ${PLUGIN_JSON}"
@@ -75,5 +79,25 @@ case "$BUMP_TYPE" in
   major) NEW="$((MAJ + 1)).0.0" ;;
 esac
 
+# Check 6: working tree clean
+if [[ "$ALLOW_DIRTY" -eq 0 ]]; then
+  if [[ -n "$(git status --porcelain)" ]]; then
+    error_exit "working tree not clean — commit/stash or pass --allow-dirty"
+  fi
+fi
+
+# Check 7: op main branch
+CURRENT_BRANCH=$(git branch --show-current)
+if [[ "$CURRENT_BRANCH" != "main" ]]; then
+  error_exit "not on main branch (on: ${CURRENT_BRANCH}) — switch to main first"
+fi
+
+# Check 8: tag bestaat nog niet (lokaal)
+TAG="${PLUGIN}/v${NEW}"
+if git rev-parse --verify --quiet "refs/tags/${TAG}" >/dev/null; then
+  error_exit "tag ${TAG} already exists"
+fi
+
 # (volgende tasks vullen rest in)
 echo "would bump ${PLUGIN}: ${CURRENT} → ${NEW}"
+echo "would tag: ${TAG}"
