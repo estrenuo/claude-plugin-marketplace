@@ -56,5 +56,24 @@ then
   error_exit "plugin ${PLUGIN} not registered in ${MARKETPLACE_JSON}"
 fi
 
+# Read current version (uit plugin.json)
+CURRENT=$(python3 -c "
+import json, sys
+with open(sys.argv[1]) as f: print(json.load(f).get('version', ''))
+" "$PLUGIN_JSON")
+
+# Check 5: geldig semver X.Y.Z
+if ! [[ "$CURRENT" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  error_exit "current version is not valid semver: ${CURRENT}"
+fi
+
+# Compute nieuwe versie
+IFS=. read -r MAJ MIN PAT <<< "$CURRENT"
+case "$BUMP_TYPE" in
+  patch) NEW="$MAJ.$MIN.$((PAT + 1))" ;;
+  minor) NEW="$MAJ.$((MIN + 1)).0" ;;
+  major) NEW="$((MAJ + 1)).0.0" ;;
+esac
+
 # (volgende tasks vullen rest in)
-echo "discovery OK: ${PLUGIN_JSON} registered"
+echo "would bump ${PLUGIN}: ${CURRENT} → ${NEW}"
