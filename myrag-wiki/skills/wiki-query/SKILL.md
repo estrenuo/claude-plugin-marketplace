@@ -30,7 +30,7 @@ Voer alle stappen in volgorde uit. Sla geen stap over.
 
 ---
 
-**Stap 1: Bevraaag qmd (primaire retrieval)**
+**Stap 1: Bevraag qmd (primaire retrieval)**
 
 Roep `mcp__qmd-feat__query` aan met minimaal twee sub-queries:
 

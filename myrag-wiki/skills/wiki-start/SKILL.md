@@ -13,6 +13,10 @@ description: |
   garandeert niet dat alle stappen worden uitgevoerd; zonder skill
   worden stappen samengevat, samengevoegd of overgeslagen. De skill
   dwingt de volledige volgorde af.
+
+  Als deze skill en CLAUDE.md conflicteren, heeft CLAUDE.md voorrang.
+  Volg de expliciete instructies in CLAUDE.md en pas deze skill alleen
+  aan waar nodig om consistentie met CLAUDE.md te behouden.
 allowed-tools:
   - Read
 ---
@@ -23,9 +27,18 @@ Dit is het session start protocol uit CLAUDE.md. Alle 6 stappen zijn verplicht e
 
 <process>
 
+Volg deze zes stappen in precies deze volgorde. Als een stap niet kan
+worden uitgevoerd omdat een verplicht bestand ontbreekt of niet
+toegankelijk is, meld dat meteen aan de gebruiker en onderbreek de
+sessiestart. Lees eerst, verzamel vervolgens de benodigde statusdata,
+en eindig met een gestandaardiseerde rapportage.
+
 ## Stap 1: Lees CLAUDE.md
 
 Lees `CLAUDE.md` volledig met de Read-tool.
+
+Als `CLAUDE.md` niet gevonden kan worden, meld dat meteen aan de gebruiker
+met de bestandsnaam en onderbreek de sessiestart.
 
 **Waarom:** CLAUDE.md is de gezaghebbende bron voor alle wiki-workflows en schema-definities. Als deze skill en CLAUDE.md conflicteren, heeft CLAUDE.md voorrang. Zonder CLAUDE.md actief in context kunnen latere stappen afwijken van de actuele workflow-definitie.
 

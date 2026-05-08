@@ -5,6 +5,7 @@ Skills + agents voor het onderhouden van een Obsidian-based LLM wiki (zie `templ
 ## Bevat
 
 **Skills** (auto-activerend op natural-language triggers):
+
 - `wiki-start` — sessie starten, oriëntatie op de wiki
 - `wiki-ingest` — bronnen verwerken vanuit `raw/`
 - `wiki-query` — kennisvragen beantwoorden via qmd + indexes
@@ -12,6 +13,7 @@ Skills + agents voor het onderhouden van een Obsidian-based LLM wiki (zie `templ
 - `wiki-explore` — overview / graph / gaps verkennen
 
 **Agents** (gespecialiseerd, oproepbaar via Task tool):
+
 - `analysis-filer`, `contradiction-detector`, `cross-reference-sweeper`,
   `gap-detector`, `pdf-ingest-agent`, `source-cluster-tagger`, `stub-filler`
 
@@ -19,7 +21,7 @@ Skills + agents voor het onderhouden van een Obsidian-based LLM wiki (zie `templ
 
 ### Via GitHub
 
-```
+```text
 /plugin marketplace add estrenuo/claude-plugin-marketplace
 /plugin install myrag-wiki@claude-plugin-marketplace
 ```
@@ -64,7 +66,7 @@ niet in `CLAUDE.md`.
 ## Vereisten
 
 - Obsidian-vault met `CLAUDE.md`, `index.md`, `log.md`, `raw/`, `wiki/` (zie Vault bootstrap hierboven)
-- qmd CLI geïnstalleerd, met de **estrenuo/qmd fork** (https://github.com/estrenuo/qmd) — deze fork voegt MCP-tools `update` en `embed` toe die de skills nodig hebben. Upstream qmd werkt **niet** met deze plugin.
+- qmd CLI geïnstalleerd, met de **estrenuo/qmd fork** (<https://github.com/estrenuo/qmd>) — deze fork voegt MCP-tools `update` en `embed` toe die de skills nodig hebben. Upstream qmd werkt **niet** met deze plugin.
 - De MCP-server staat in `.mcp.json` geregistreerd als `qmd-feat` en start automatisch wanneer de plugin enabled is.
 - Python 3 voor `${CLAUDE_PLUGIN_ROOT}/scripts/regen-quick-indexes.py`
   (script wordt vanuit de vault root aangeroepen; vindt `wiki/` via cwd of via een vault-pad als argv[1])

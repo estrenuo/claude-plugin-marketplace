@@ -26,7 +26,19 @@ geen enkel stap schrijft naar de wiki.
 ## Bepaal de modus
 
 Lees de gebruikersinput en dispatch naar één van de vier secties hieronder.
-Gebruik de tabel als disambiguator bij twijfel:
+Gebruik de tabel als disambiguator bij twijfel.
+
+Als de input meerdere intenties bevat, volg deze prioriteit in plaats van te
+proberen alles tegelijk te beantwoorden:
+- recent > graph > gaps > overview
+
+Als de intentie onduidelijk blijft, vraag om verduidelijking.
+
+Gebruik de volgende regels om mixed-intentvragen te behandelen:
+- Als een query zowel recente activiteit als structuurinformatie wil, kies dan
+  `recent`.
+- Als een query zowel linkanalyse als dekking vraagt, kies dan `graph` als de
+  focus op relaties ligt, anders `gaps`.
 
 | Gebruiker vraagt naar... | Modus |
 |--------------------------|-------|
@@ -36,8 +48,12 @@ Gebruik de tabel als disambiguator bij twijfel:
 | Recente activiteit, wat is er gedaan, laatste wijzigingen | recent |
 
 **Ambigue grensgevallen:**
-- "Wat mist er in de wiki over onderwerp X?" — Bevat een specifiek onderwerp → wiki-query.
-  Gaat de vraag generiek over de wiki-structuur → gaps-modus.
+- "Wat mist er in de wiki over onderwerp X?" — noem een specifiek concept, entiteit of zoekterm.
+  Dat is een wiki-query-vraag. Bijvoorbeeld: "Wat mist er in de wiki over climate
+  change?" is query; "Wat mist er in de wiki qua documentatie over het hele
+  onderwerp energie?" kan gaps zijn als het om de algemene dekking gaat.
+- Als de vraag alleen gaat over hiaten in de algemene wiki-structuur of
+  thema's zonder een expliciet genoemd onderwerp, gebruik `gaps`.
 - "Show me orphan pages" → graph-modus (orphan-detectie), niet gaps.
 
 ---

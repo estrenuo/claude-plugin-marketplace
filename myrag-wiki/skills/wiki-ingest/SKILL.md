@@ -1,13 +1,21 @@
 ---
 name: wiki-ingest
 description: |
-  Gebruik deze skill wanneer de gebruiker een ingest-opdracht geeft voor de wiki:
-  bronnen toevoegen, bestanden verwerken, nieuwe documenten importeren.
+  Gebruik deze skill wanneer de gebruiker nieuwe of bijgewerkte bronnen in de wiki
+  wil verwerken. Dit omvat:
+  - bestandsingest uit `raw/` zoals `*.md`, `*.pdf`
+  - import van documenten in de wiki-structuur
+  - bijwerken van bestaande wiki-entiteiten/concepten op basis van nieuwe bronnen
+  - het bijwerken van `index.md`, `wiki/ingest-state.md`, `log.md`, en quick-indexes
+
+  Niet voor:
+  - vragen over wiki-inhoud of betekenis van pagina's (→ wiki-query)
+  - lint- of kwaliteitscontroles zonder ingestactie (→ wiki-lint)
+  - algemene wiki-overzichten of grafiekanalyses (→ wiki-explore)
+
   Typische triggers: "ingest", "verwerk bronnen", "nieuwe bestanden verwerken",
   "voeg dit toe aan de wiki", "ingest <bestandsnaam>", "verwerk nieuwe bronnen",
   "scan de raw-map", "verwerk dit artikel", of informele varianten daarvan.
-  Niet voor: wiki-inhoud opvragen (→ wiki-query), lint-controles (→ wiki-lint),
-  wiki-overzicht (→ wiki-explore).
 allowed-tools: Read, Write, Edit, Bash, Task, mcp__qmd-feat__update
 ---
 
@@ -54,30 +62,52 @@ Force-ingest (`ingest <bestandsnaam>`) heeft altijd `count = 1`.
 
 ## Stap 2 — Bepaal index-modus (INGS-01)
 
-Op basis van de batch-count (uit Stap 1) bepaal je vóór de batch-loop welke index-onderhoudsmodus geldt voor deze hele run:
+Bepaal vooraf de index-onderhoudsmodus op basis van batch-count. Gebruik deze eenvoudige tabel:
 
-- **`count == 0`** → geen verwerking, geen index-update, geen qmd update. Alleen rapport (zie Stap 5).
-- **`count >= 3`** → **regenerate-modus**: sla Stap 7 (patch quick-indexes) per file over. Roep aan het einde van de batch eenmalig `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/regen-quick-indexes.py"` aan vóór `qmd update`.
-- **`count >= 1 en count < 3`** (dus 1 of 2) → **patch-modus**: voer Stap 7 normaal uit per file. Geen scriptaanroep.
+- **count = 0**
+  - Actie: geen ingest, geen index-update, geen qmd update.
+  - Output: alleen het Stap 5-rapport.
+  - Modus: n.v.t.
+- **count = 1 of 2**
+  - Modus: patch-modus
+  - Actie: voer Stap 7 per file uit zoals beschreven in `references/ingest-steps.md`.
+  - Scriptaanroep: nee
+- **count ≥ 3**
+  - Modus: regenerate-modus
+  - Actie: sla Stap 7 per file over
+  - Scriptaanroep: ja, roep na de batch eenmalig `python3 "${CLAUDE_PLUGIN_ROOT}/scripts/regen-quick-indexes.py"` aan vóór Stap 10
 
-**Annonceer de modus expliciet aan de gebruiker vóór je verder gaat:**
+**Aankondiging:** meld deze modus aan de gebruiker voordat je de batch uitvoert.
+
+Voorbeelden van exacte formulering:
 ```
 Index-modus: regenerate (count=N ≥ 3) — script wordt na batch aangeroepen
 ```
-of
+en
 ```
 Index-modus: patch (count=N < 3) — per-file patches in Stap 7
 ```
 
-**Edge cases (expliciet documenteren in deze sectie als bullet-lijst):**
-- Force-ingest: altijd count=1 → patch-modus
-- Multi-page raw met "alleen analyse"-keuze: telt nog steeds als 1
-- Threshold is exact ≥3, niet >3 (dus 3 = regenerate, 2 = patch)
-- count == 0: eigen no-op conditie — geen index-update, geen qmd update, wel rapport
+**Regels:**
+- Force-ingest heeft altijd `count = 1` en valt daarom automatisch onder patch-modus.
+- `count = 3` behoort tot regenerate-modus. `count = 2` behoort tot patch-modus.
+- `count = 0` is een no-op-batch: voer geen ingest-stappen uit, maar genereer wel een rapport.
 
 ---
 
 ## Stap 3 — Force-ingest modus
+
+Als de gebruiker `ingest <bestandsnaam>` geeft, overschrijft deze stap Stap 1.
+Force-ingest springt direct naar verwerking van het opgegeven bestand zonder
+de detectiepad van Stap 1.
+
+- Als het bestand niet bestaat in `raw/`: geef een foutmelding en stop.
+- Als het bestand meerdere wikilinks heeft in ingest-state.md: voer de
+  multi-page dialoog uit vóór Stap 4.
+- Genereer altijd een volledig rapport via Stap 5.
+- `count = 1` altijd, dus patch-modus.
+
+**PDF-bronnen:** delegatie naar `pdf-ingest-agent`.
 
 `ingest <bestandsnaam>` slaat detectie over en verwerkt het opgegeven bestand direct. Gebruik dit voor geforceerde herverwerking ongeacht mtime/hash-status.
 

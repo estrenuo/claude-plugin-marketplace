@@ -4,12 +4,20 @@ description: |
   Gebruik deze skill wanneer de gebruiker vraagt om een lint-pass of health check
   van de wiki. Triggerwoorden: "lint", "health check", "wiki controleren",
   "check de wiki", "zijn er kapotte links?", "wiki health", "wiki doorlichten",
-  "orphan pages", "broken links controleren", of vergelijkbare varianten die
-  vragen om een kwaliteitscontrole van de wiki-structuur of -links.
+  "orphan pages", "broken links controleren", of andere zinnen die expliciet
+  verwijzen naar controle van wiki-structuur, links of kwaliteit.
 allowed-tools: Read Grep Bash Edit Write Task mcp__qmd-feat__query mcp__qmd-feat__update
 ---
 
 # wiki-lint
+
+## Hoofdworkflow
+
+1. Scan de wiki met algoritmische en beoordelingschecks.
+2. Identificeer vulbare stubs.
+3. Rapporteer bevindingen gesorteerd op prioriteit.
+4. Vraag welke items de gebruiker nu wil fixen.
+5. Voer geselecteerde fixes uit en werk qmd-index bij als er wijzigingen zijn.
 
 ## Stap 1: Scan wiki/ — 7 check-categorieën
 
