@@ -99,6 +99,22 @@ Voor een plugin-release:
    Het script muteert `version` in `<plugin>/.claude-plugin/plugin.json`,
    maakt een commit en plaatst een annotated tag `<plugin>/v<x.y.z>`.
 
+   Bij succes verschijnt een blok als:
+
+   ```text
+   ✓ Bumped myrag-wiki: 0.1.0 → 0.2.0
+   ✓ Committed: a1b2c3d
+   ✓ Tagged: myrag-wiki/v0.2.0
+
+   Push: git push origin main --follow-tags
+   ```
+
+   Faalt het script met `working tree not clean`, commit dan eerst je
+   andere wijzigingen óf gebruik `--allow-dirty` (zie onder). Faalt het
+   met `tag … already exists`, dan is die versielijn al gepubliceerd —
+   kies een hoger bump-type of corrigeer de huidige `version` in
+   `plugin.json` voor je opnieuw bumpt.
+
 3. Push wijzigingen en tag:
 
    ```bash
@@ -107,12 +123,18 @@ Voor een plugin-release:
 
 4. Optioneel: schrijf een release-note op de bijbehorende GitHub release.
 
-Als je in dezelfde PR ook code-changes wilt bumpen (nog niet
-gecommit), gebruik `--allow-dirty`:
+Gebruik `--allow-dirty` wanneer de bump samen met andere code-changes
+moet landen (bijvoorbeeld: feature-implementatie en versie-bump in
+dezelfde release-commit):
 
 ```bash
+git add <files-die-mee-moeten>
 scripts/bump-plugin.sh myrag-wiki minor --allow-dirty
 ```
+
+Het script slaat dan de clean-tree-check over. De bump-commit bevat
+`plugin.json` plus alles wat je al gestaged hebt; ongestagede
+wijzigingen blijven onaangeroerd in je working tree.
 
 ## Pull requests
 
