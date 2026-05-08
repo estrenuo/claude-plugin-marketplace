@@ -36,5 +36,25 @@ case "$BUMP_TYPE" in
   *) error_exit "bump type must be patch, minor, or major (got: ${BUMP_TYPE})" ;;
 esac
 
+# Check 3: plugin.json bestaat
+PLUGIN_JSON="${PLUGIN}/.claude-plugin/plugin.json"
+[[ -f "$PLUGIN_JSON" ]] || error_exit "plugin not found: ${PLUGIN_JSON}"
+
+# Check 4: plugin staat in marketplace.json
+MARKETPLACE_JSON=".claude-plugin/marketplace.json"
+[[ -f "$MARKETPLACE_JSON" ]] || error_exit "marketplace manifest not found: ${MARKETPLACE_JSON}"
+
+if ! python3 - "$MARKETPLACE_JSON" "$PLUGIN" <<'PY'
+import json, sys
+path, name = sys.argv[1], sys.argv[2]
+with open(path) as f:
+    data = json.load(f)
+names = [p.get("name") for p in data.get("plugins", [])]
+sys.exit(0 if name in names else 1)
+PY
+then
+  error_exit "plugin ${PLUGIN} not registered in ${MARKETPLACE_JSON}"
+fi
+
 # (volgende tasks vullen rest in)
-echo "skeleton OK: plugin=$PLUGIN bump=$BUMP_TYPE allow_dirty=$ALLOW_DIRTY"
+echo "discovery OK: ${PLUGIN_JSON} registered"
