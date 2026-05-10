@@ -16,7 +16,7 @@ description: |
   Typische triggers: "ingest", "verwerk bronnen", "nieuwe bestanden verwerken",
   "voeg dit toe aan de wiki", "ingest <bestandsnaam>", "verwerk nieuwe bronnen",
   "scan de raw-map", "verwerk dit artikel", of informele varianten daarvan.
-allowed-tools: Read, Write, Edit, Bash, Task, mcp__qmd-feat__update
+allowed-tools: Read, Write, Edit, Bash, Task, WebFetch, mcp__qmd-feat__update, mcp__plugin_context7_context7__query-docs, mcp__plugin_context7_context7__resolve-library-id
 ---
 
 # wiki-ingest
@@ -147,7 +147,7 @@ Volledige stappen met why-zinnen en format-specs in `references/ingest-steps.md`
 2. Bespreek 2-5 kernpunten — **wacht op bevestiging gebruiker vóór schrijven**
 3. Schrijf/update wiki/sources/YYYY-MM-DD-slug.md
 4. Update wiki/entities/*.md (nieuwe info, tegenstrijdigheden → ## Open questions)
-5. Update wiki/concepts/*.md (idem)
+5. Update wiki/concepts/*.md (idem) — **Stap 5a: canonical-doc-check verplicht** voor feitelijk-klinkende technische claims uit derivative bronnen over Claude Code, MCP, Task-tool of memory. Eén check per claim vóór schrijven; bij tegenspraak landt de claim onder `## Open questions` in plaats van als feit. Details in `references/ingest-steps.md`.
 6. Update index.md (entry toevoegen of verversen)
 7. Patch wiki/sources-index.md en wiki/concepts-index.md (alleen patch-modus)
 8. Append aan log.md (type: ingest of update)

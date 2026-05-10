@@ -22,6 +22,10 @@ Na verwerking van alle bestanden rapporteer je altijd de zeven verplichte elemen
 **Stubs created:** [N stubpagina's aangemaakt: [[slug|Titel]], ...]
 (Geen als er geen zijn)
 
+**Canonical-doc-checks:** [N checks uitgevoerd op claims over Claude Code/MCP/Task-tool/memory uit derivative bronnen]
+- <concept> ← <bron-slug>: bevestigd | tegenspraak | niet-vindbaar
+(Geen als er geen derivative claims op die onderwerpen waren)
+
 **Per-bestand uitkomsten:**
 | Bestand | Uitkomst | Opmerking |
 |---------|----------|-----------|
