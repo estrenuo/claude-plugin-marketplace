@@ -22,6 +22,46 @@ Voeg nieuwe informatie toe aan relevante entiteitenpagina's. Markeer tegenstrijd
 
 Zelfde als stap 4 maar voor conceptpagina's. Één feit heeft één eigenaar — als een concept al elders gedocumenteerd is, link daarnaar in plaats van te dupliceren.
 
+### Stap 5a: Canonical-doc-check voor derivative bronnen (verplicht)
+
+**Trigger — alle drie moeten gelden:**
+1. De bron is **derivative** (niet de canonieke leverancier-doc). Concreet: blogposts, LinkedIn/X-posts, nieuwsbrieven, YouTube-transcripts, Reddit-threads, community-artikelen, of pagina's onder `analysis/`. Officiële Anthropic-docs (`docs.claude.com`, `docs.anthropic.com`, `modelcontextprotocol.io`, repo-READMEs van anthropics/) zijn **niet** derivative — sla 5a over.
+2. De claim is **feitelijk-klinkend en technisch** (niet een mening/recensie). Voorbeeld feitelijk: "Claude Code's Task-tool spawnt subagents in een eigen context window van 200k tokens". Voorbeeld mening: "Claude Code voelt sneller dan Cursor".
+3. De claim raakt **Claude Code, MCP, de Task-tool (subagents), of memory** (auto-memory, CLAUDE.md, claude-mem, sessiestate). Andere onderwerpen → 5a niet vereist.
+
+**Actie — precies één canonical-doc-check per claim, vóór schrijven naar wiki/concepts/*.md:**
+
+Kies één bron, in deze volgorde van voorkeur:
+- **Claude Code / Task-tool / memory:** delegeer via Task tool met `subagent_type: claude-code-guide` met de specifieke claim. De agent verifieert tegen `docs.claude.com/en/docs/claude-code/*`.
+- **MCP:** WebFetch op `https://modelcontextprotocol.io/` of de relevante spec-pagina (bijv. `/specification/...`). Als dat onhaalbaar is: `claude-code-guide` agent met het MCP-onderwerp.
+- **Anthropic SDK / API-claims die binnenglippen:** `mcp__plugin_context7_context7__query-docs` met library-id voor anthropic-sdk, of `claude-code-guide`.
+
+Eén check per claim is genoeg — niet meerdere bronnen vergelijken. Doel is detectie van flagrante onjuistheden, geen volledige peer review.
+
+**Drie uitkomsten:**
+
+- **Bevestigd** → schrijf de claim naar de conceptpagina als feit. Geen extra annotatie nodig.
+- **Tegenspraak met canonical doc** → schrijf de claim **niet** als feit. Voeg in plaats daarvan een entry onder `## Open questions` op de conceptpagina:
+  ```
+  - Bron [[sources/<slug>|<titel>]] claimt "<exacte claim>" maar canonical doc (<URL of agent-citaat>) zegt "<wat de doc zegt>". Niet overgenomen als feit.
+  ```
+- **Niet vindbaar in canonical doc** (claim gaat over ongedocumenteerd intern gedrag of recente change) → schrijf de claim met expliciete attributie: `Volgens [[sources/<slug>|<titel>]]: <claim>.` Niet als ongekwalificeerd feit. Noteer kort onder `## Open questions` dat canonical doc geen uitspraak doet.
+
+**Rapportage:** noteer per geverifieerde claim één regel in het Stap 5-rapport onder een nieuw kopje **Canonical-doc-checks**: `<concept> ← <bron-slug>: bevestigd | tegenspraak | niet-vindbaar`.
+
+**Waarom:** derivative bronnen halen Claude Code/MCP-internals geregeld door elkaar (verouderde API's, hallucinaties over toolnamen, verkeerd geciteerde limieten). Eén check vóór de claim de wiki binnenkomt voorkomt dat foutieve feiten zich via concept-pagina's vermenigvuldigen. Entiteiten- en bronpagina's zijn niet onderworpen aan 5a — daar staat de claim al expliciet aan een bron toegeschreven.
+
+**Voorbeelden van triggerende claims:**
+- "MCP servers communiceren standaard via stdio" → check op modelcontextprotocol.io
+- "De Task-tool heeft een eigen context window van 200k" → check via claude-code-guide
+- "CLAUDE.md wordt automatisch geladen tot 5 niveaus diep" → check via claude-code-guide
+- "claude-mem injecteert geheugen via een PreToolUse hook" → check via claude-code-guide of repo-README
+
+**Voorbeelden van niet-triggerende claims:**
+- "Claude Code voelt prettig in de terminal" — geen feitelijke claim
+- "Postgres ondersteunt JSONB" — niet over Claude Code/MCP/Task/memory
+- Claim afkomstig uit `docs.claude.com` zelf — niet derivative
+
 ## Stap 6: Update index.md
 
 Voeg de nieuwe bronpagina toe of ververs de bestaande entry. Formaat per entry: `- [[slug|Titel]] — één-zin beschrijving (N bronnen)`. Zonder deze stap raakt index.md verouderd en verliest het zijn functie als inhoudscatalogus.
