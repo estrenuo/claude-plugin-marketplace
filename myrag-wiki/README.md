@@ -11,6 +11,7 @@ Skills + agents voor het onderhouden van een Obsidian-based LLM wiki (zie `templ
 - `wiki-query` — kennisvragen beantwoorden via qmd + indexes
 - `wiki-lint` — health check (broken links, orphans, stubs)
 - `wiki-explore` — overview / graph / gaps verkennen
+- `autoresearch` — iteratieve web-research-loop (WebSearch + WebFetch) die direct in `wiki/analysis/` filet volgens myrag-conventies
 
 **Agents** (gespecialiseerd, oproepbaar via Task tool):
 

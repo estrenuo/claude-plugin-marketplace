@@ -7,7 +7,7 @@
     {
       "name": "myrag-wiki",
       "source": "./myrag-wiki",
-      "description": "Wiki maintainer skills voor een Obsidian-based LLM wiki (ingest, query, lint, explore, start)."
+      "description": "Wiki maintainer skills voor een Obsidian-based LLM wiki (ingest, query, lint, explore, start, autoresearch)."
     }
   ]
 }
